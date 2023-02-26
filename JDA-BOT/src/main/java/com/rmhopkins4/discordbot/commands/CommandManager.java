@@ -32,6 +32,8 @@ public class CommandManager extends ListenerAdapter {
 			MaowCatCommand.runCommand(event);
 		} else if(command.equals("randomcat")) {
 			RandomCatCommand.runCommand(event);
+		} else if(command.equals("silksongupdate")) {
+			SilksongUpdateCommand.runCommand(event);
 		}
 	}
 	
@@ -40,17 +42,20 @@ public class CommandManager extends ListenerAdapter {
 	public void onGuildReady(@NotNull GuildReadyEvent event) {
 		List<CommandData> commandData = new ArrayList<>();
 		
-		// Command: /say <message> [channel]
+		// Command: '/say <message> [channel]'
 		OptionData option1 = new OptionData(OptionType.STRING, "message", "The message you want Melv to say", true);
 		OptionData option2 = new OptionData(OptionType.CHANNEL, "channel", "The channel you want Melv to send the message in", false)
 				.setChannelTypes(ChannelType.TEXT, ChannelType.NEWS, ChannelType.GUILD_PUBLIC_THREAD);
 		commandData.add(Commands.slash("say", "Make the bot say a message.").addOptions(option1, option2));
 		
-		// Command: /maowcat
+		// Command: '/maowcat'
 		commandData.add(Commands.slash("maow", "Send maowcat video!"));
 		
-		// Command: /randomcat
+		// Command: '/randomcat'
 		commandData.add(Commands.slash("randomcat", "Sends a random cat."));
+		
+		// Command: '/silksongUpdate'
+		commandData.add(Commands.slash("silksongupdate", "Updates on Silksong time."));
 		
 		
 		

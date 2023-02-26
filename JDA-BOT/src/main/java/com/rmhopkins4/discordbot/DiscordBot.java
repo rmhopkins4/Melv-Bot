@@ -24,7 +24,7 @@ public class DiscordBot {
 		
 		DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(token);
 		builder.setStatus(OnlineStatus.ONLINE);
-		builder.setActivity(Activity.competing("Super Auto Pets"));
+		builder.setActivity(Activity.watching("the same cat video over and over again"));
 		builder.enableIntents(GatewayIntent.GUILD_MEMBERS, 
 				GatewayIntent.MESSAGE_CONTENT, 
 				GatewayIntent.GUILD_PRESENCES);
@@ -51,7 +51,7 @@ public class DiscordBot {
 	
 	public static void main(String[] args) {
 		try {
-			DiscordBot bot = new DiscordBot();
+			new DiscordBot();
 		} catch(LoginException e) {
 			System.out.println("ERROR: Provided bot token is invalid!");
 		}
