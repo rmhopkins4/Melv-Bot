@@ -23,7 +23,7 @@ public class CreditManager {
 	private final static int DEFAULTSCORE = 1000;
 	
 	public CreditManager(Guild g) {
-		this.creditData = new File(g.getId());
+		this.creditData = new File("guildScores/" + g.getId());
 		try {
 			if(creditData.createNewFile()) {
 				System.out.println("made!");
