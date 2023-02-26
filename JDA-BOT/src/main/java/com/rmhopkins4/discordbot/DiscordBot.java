@@ -12,6 +12,9 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 public class DiscordBot {
 	
@@ -30,9 +33,9 @@ public class DiscordBot {
 				GatewayIntent.GUILD_PRESENCES);
 		
 		// cache'ing users is very expensive and should be avoided if possible
-		//builder.setMemberCachePolicy(MemberCachePolicy.ALL); //caches all members in every server
-		//builder.setChunkingFilter(ChunkingFilter.ALL); //caches all members on startup
-		//builder.enableCache(CacheFlag.ONLINE_STATUS); //specifically caches users' online status'
+		builder.setMemberCachePolicy(MemberCachePolicy.ALL); //caches all members in every server
+		builder.setChunkingFilter(ChunkingFilter.ALL); //caches all members on startup
+		builder.enableCache(CacheFlag.ACTIVITY); //specifically caches users' online status'
 		
 		shardManager = builder.build();
 		

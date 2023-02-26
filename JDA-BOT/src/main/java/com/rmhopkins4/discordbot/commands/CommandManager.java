@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.rmhopkins4.discordbot.commands.creditscore.RetrieveHighestScoreCommand;
+import com.rmhopkins4.discordbot.commands.creditscore.RetrieveScoreCommand;
+
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.channel.ChannelType;
@@ -34,6 +37,10 @@ public class CommandManager extends ListenerAdapter {
 			RandomCatCommand.runCommand(event);
 		} else if(command.equals("silksongupdate")) {
 			SilksongUpdateCommand.runCommand(event);
+		} else if(command.equals("getscore")) {
+			RetrieveScoreCommand.runCommand(event);
+		} else if(command.equals("highestscore")) {
+			RetrieveHighestScoreCommand.runCommand(event);
 		}
 	}
 	
@@ -57,7 +64,12 @@ public class CommandManager extends ListenerAdapter {
 		// Command: '/silksongUpdate'
 		commandData.add(Commands.slash("silksongupdate", "Updates on Silksong time."));
 		
+		// Command: '/getscore [user]'
+		OptionData option3 = new OptionData(OptionType.USER, "user", "The user you want to get the score from", false);
+		commandData.add(Commands.slash("getscore", "Get someone's social credit score").addOptions(option3));
 		
+		// Command: 'highestscore'
+		commandData.add(Commands.slash("highestscore", "Get the highest scorer"));
 		
 		event.getGuild().updateCommands().addCommands(commandData).queue();
 	}
