@@ -10,7 +10,7 @@ public class RetrieveHighestScoreCommand {
 
 	public static void runCommand(@NotNull SlashCommandInteractionEvent event) {
 		
-		CreditManager cm = new CreditManager();
+		CreditManager cm = new CreditManager(event.getGuild());
 		ArrayList<String> highestUsers = cm.getHighest();
 		int score = 0;
 		try {

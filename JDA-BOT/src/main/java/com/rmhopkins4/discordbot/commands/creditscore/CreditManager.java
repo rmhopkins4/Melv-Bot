@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 
 public class CreditManager {
@@ -23,10 +24,16 @@ public class CreditManager {
 	
 	public CreditManager(String fileAddress) {
 		this.creditData = new File(fileAddress);
+		try {
+			creditData.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public CreditManager() {
-		this(DEFAULT_FILE);
+	public CreditManager(Guild g) {
+		this(g.getId());
 	}
 	
 	private void readFile() {

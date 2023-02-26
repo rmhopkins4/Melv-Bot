@@ -45,8 +45,8 @@ public class EventListener extends ListenerAdapter {
 			String memberMention = event.getMember().getAsMention();
 			if(act.getDetails() != null) {
 				if(act.getDetails().toLowerCase().contains("in game") && act.getName().toLowerCase().contains("league of legends")) {
-					new CreditManager().changeScore(event.getMember(), -100);
-					event.getGuild().getDefaultChannel().asStandardGuildMessageChannel().sendMessage(memberMention + " has started playing League! EW!").queue();
+					new CreditManager(event.getGuild()).changeScore(event.getMember(), -100);
+					event.getGuild().getDefaultChannel().asStandardGuildMessageChannel().sendMessage(memberMention + " has started playing League! EW!:face_vomiting:").queue();
 				}
 			}
 		} 

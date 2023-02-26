@@ -20,7 +20,7 @@ public class RetrieveScoreCommand {
 		}
 		
 		
-		CreditManager cm = new CreditManager();
+		CreditManager cm = new CreditManager(event.getGuild());
 		int socialScore = 0;
 		try {
 			socialScore = cm.getScore(user.getId());
