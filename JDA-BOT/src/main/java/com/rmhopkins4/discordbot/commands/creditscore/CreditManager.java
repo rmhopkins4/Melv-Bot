@@ -22,18 +22,20 @@ public class CreditManager {
 	private final static String DEFAULT_FILE = "socialCreditData.txt";
 	private final static int DEFAULTSCORE = 1000;
 	
-	public CreditManager(String fileAddress) {
-		this.creditData = new File(fileAddress);
+	public CreditManager(Guild g) {
+		this.creditData = new File(g.getId());
 		try {
-			creditData.createNewFile();
+			if(creditData.createNewFile()) {
+				System.out.println("made!");
+				g.getDefaultChannel().asStandardGuildMessageChannel()
+				.sendMessage("Social Credit Score initialized! Every member will begin with " + DEFAULTSCORE + " points.").queue();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public CreditManager(Guild g) {
-		this(g.getId());
+		
+		//this(g.getId());
 	}
 	
 	private void readFile() {
