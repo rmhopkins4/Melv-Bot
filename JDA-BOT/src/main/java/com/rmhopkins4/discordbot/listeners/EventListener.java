@@ -38,17 +38,38 @@ public class EventListener extends ListenerAdapter {
 		.sendMessage("MelvBot welcomes you to " + guildName + ", **" + userMention + "**!").queue();
 	}
 	
+	
 	@Override
 	public void onUserActivityStart(@NotNull UserActivityStartEvent event) {
-		if(event.getNewActivity().isRich()) {
-			RichPresence act = event.getNewActivity().asRichPresence();
-			String memberMention = event.getMember().getAsMention();
-			if(act.getDetails() != null) {
-				if(act.getDetails().toLowerCase().contains("in game") && act.getName().toLowerCase().contains("league of legends")) {
-					new CreditManager(event.getGuild()).changeScore(event.getMember(), -100);
-					event.getGuild().getDefaultChannel().asStandardGuildMessageChannel().sendMessage(memberMention + " has started playing League! EW!:face_vomiting:").queue();
-				}
-			}
+		if(!event.getNewActivity().isRich()) { //check if activity is Rich Presence
+			return;
 		} 
+		RichPresence act = event.getNewActivity().asRichPresence();
+		String memberMention = event.getMember().getAsMention();
+		String actName = act.getName();
+		if(actName == null) {
+			actName = "";
+		}
+		actName = actName.toLowerCase();
+		
+		String actDetails = act.getDetails();
+		if(actDetails == null) {
+			actDetails = "";
+		}
+		actDetails = actDetails.toLowerCase();
+		
+		String actState = act.getState();
+		if(actState == null) {
+			actState = "";
+		}
+		actState = actState.toLowerCase();
+		
+		System.out.println(event.getMember().getEffectiveName() + " is doing " + actName + " : " + actDetails + " : " + actState + " in " + event.getGuild().getName());
+		
+		if(actDetails.contains("in game") && actName.contains("league of legends")) {
+			new CreditManager(event.getGuild()).changeScore(event.getMember(), -100);
+			event.getGuild().getDefaultChannel().asStandardGuildMessageChannel().sendMessage(memberMention + " has started playing League! EW!:face_vomiting:").queue();
+		}
+		
 	}
 }

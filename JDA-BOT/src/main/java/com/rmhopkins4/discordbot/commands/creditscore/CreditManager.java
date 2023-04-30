@@ -131,4 +131,21 @@ public class CreditManager {
 		}
 		return highestScorers;
 	}
+	
+	public ArrayList<String> getLowest() {
+		readFile();
+		int minScore = currentMemberScores.get(0);
+		ArrayList<String> highestScorers = new ArrayList<>();
+		for(int i = 0; i < currentMemberScores.size(); i++) { // get lowest score
+			if(currentMemberScores.get(i) < minScore) {
+				minScore = currentMemberScores.get(i);
+			}
+		}
+		for(int i = 0; i < currentMemberScores.size(); i++) { // get users with lowest score
+			if(currentMemberScores.get(i) == minScore) {
+				highestScorers.add(currentMemberIDs.get(i));
+			}
+		}
+		return highestScorers;
+	}
 }

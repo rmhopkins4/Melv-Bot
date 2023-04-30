@@ -6,7 +6,9 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 import com.rmhopkins4.discordbot.commands.creditscore.RetrieveHighestScoreCommand;
+import com.rmhopkins4.discordbot.commands.creditscore.RetrieveLowestScoreCommand;
 import com.rmhopkins4.discordbot.commands.creditscore.RetrieveScoreCommand;
+import com.rmhopkins4.discordbot.commands.roulette.RouletteCommand;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -27,20 +29,36 @@ public class CommandManager extends ListenerAdapter {
 	
 	@Override
 	public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-		String command = event.getName(); // /hello, etc.
+		String command = event.getName(); // '/say [...] {...}', '/maow', etc.
 		
-		if(command.equals("say")) {
+		switch(command) {
+		case "say": 
 			SayCommand.runCommand(event);
-		} else if(command.equals("maow")) {			
+			break;
+		case "maow":
 			MaowCatCommand.runCommand(event);
-		} else if(command.equals("randomcat")) {
+			break;
+		case "randomcat":
 			RandomCatCommand.runCommand(event);
-		} else if(command.equals("silksongupdate")) {
+			break;
+		case "silksongupdate":
 			SilksongUpdateCommand.runCommand(event);
-		} else if(command.equals("getscore")) {
+			break;
+		case "tearsupdate":
+			TOTKUpdateCommand.runCommand(event);
+			break;
+		case "getscore":
 			RetrieveScoreCommand.runCommand(event);
-		} else if(command.equals("highestscore")) {
+			break;
+		case "highestscore":
 			RetrieveHighestScoreCommand.runCommand(event);
+			break;
+		case "lowestscore":
+			RetrieveLowestScoreCommand.runCommand(event);
+			break;
+		case "roulette":
+			RouletteCommand.runCommand(event);
+			break;
 		}
 	}
 	
@@ -53,6 +71,8 @@ public class CommandManager extends ListenerAdapter {
 		OptionData option1 = new OptionData(OptionType.STRING, "message", "The message you want Melv to say", true);
 		OptionData option2 = new OptionData(OptionType.CHANNEL, "channel", "The channel you want Melv to send the message in", false)
 				.setChannelTypes(ChannelType.TEXT, ChannelType.NEWS, ChannelType.GUILD_PUBLIC_THREAD);
+		
+		// Command: '/say [message] {channel}'
 		commandData.add(Commands.slash("say", "Make the bot say a message.").addOptions(option1, option2));
 		
 		// Command: '/maowcat'
@@ -61,15 +81,26 @@ public class CommandManager extends ListenerAdapter {
 		// Command: '/randomcat'
 		commandData.add(Commands.slash("randomcat", "Sends a random cat."));
 		
-		// Command: '/silksongUpdate'
+		// Command: '/silksongupdate'
 		commandData.add(Commands.slash("silksongupdate", "Updates on Silksong time."));
+		
+		// Command: '/tearsOfTheKingdomUpdate'
+		commandData.add(Commands.slash("tearsupdate", "Updates on TOTK release distance."));
 		
 		// Command: '/getscore [user]'
 		OptionData option3 = new OptionData(OptionType.USER, "user", "The user you want to get the score from", false);
 		commandData.add(Commands.slash("getscore", "Get someone's social credit score").addOptions(option3));
 		
-		// Command: 'highestscore'
+		// Command: '/highestscore'
 		commandData.add(Commands.slash("highestscore", "Get the highest scorer"));
+		
+		// Command: '/lowestscore'
+		commandData.add(Commands.slash("lowestscore", "Get the lowest scorer"));
+		
+		// Command: '/roulette' 
+		OptionData optionBet = new OptionData(OptionType.INTEGER, "bet", "The amount you would like to bet", true);
+		OptionData optionPosition = new OptionData(OptionType.STRING, "position", "Where you would like to bet", true);
+		commandData.add(Commands.slash("roulette", "Bet your social credit points on roulette!").addOptions(optionBet, optionPosition));
 		
 		event.getGuild().updateCommands().addCommands(commandData).queue();
 	}
